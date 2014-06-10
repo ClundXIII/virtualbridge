@@ -1,8 +1,8 @@
 #ifndef BRIDGE_H_INCLUDED
 #define BRIDGE_H_INCLUDED
 
-#include "Game.h"
-#include "Paar.h"
+#include "game.h"
+#include "team.h"
 
 class Board
 {
@@ -20,18 +20,18 @@ class Board
 
 };
 
-class BriPaare
+class Teamhelper
 {
     public:
 
-    BriPaare(int Anz);
-    ~BriPaare();
+    Teamhelper(int Anz);
+    ~Teamhelper();
 
-    void SetPaar(int Nummer, std::string Name);
+    void Setteam(int Nummer, std::string Name);
 
     int Anz;
 
-    Paar **Paare;
+    team **teams;
 
     protected:
     private:
@@ -55,7 +55,7 @@ class Bridge
 
     Board   **Boards;
 
-    BriPaare *Paare;
+    Teamhelper *bTeams;
 
     int AnzP;
     int AnzG;

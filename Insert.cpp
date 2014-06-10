@@ -9,7 +9,7 @@ int main(int argc, char *argv[])
 {
 
     int i=0, j=0;
-	fstream Dat_Paare;
+	fstream Dat_teame;
 	fstream Dat_Erg;
     string Eingabe;
     int AnzP;
@@ -24,13 +24,13 @@ int main(int argc, char *argv[])
             {
                 if (argv[1][2] == 'p')
                 {
-                    cout << "Bitte Paarnummer eingeben:" << endl;
-                    Dat_Paare.open("Paare.txt", ios::out | ios::app);
+                    cout << "Bitte teamnummer eingeben:" << endl;
+                    Dat_teame.open("teame.txt", ios::out | ios::app);
                     cout << "Nr.: ";
                     cin >> i;
                     cout << "Bitte Namen eingeben:" << endl;
                     cin >> Eingabe;
-                    Dat_Paare << endl << i << " " << Eingabe << " ";
+                    Dat_teame << endl << i << " " << Eingabe << " ";
                     return 0;
                 }
                 if (argv[1][2] == 'b')
@@ -44,7 +44,7 @@ int main(int argc, char *argv[])
 				    cin >> i;
 				    Dat_Erg << i << " ";
 
-				    cout << "PaarNummer N/S : ";
+				    cout << "teamNummer N/S : ";
 				    cin >> i;
 				    Dat_Erg << i << " ";
 
@@ -52,7 +52,7 @@ int main(int argc, char *argv[])
 				    cin >> i;
 				    Dat_Erg << i << " ";
 
-                    cout << "Paarnummer O/W : ";
+                    cout << "teamnummer O/W : ";
 				    cin >> i;
 				    Dat_Erg << i << " ";
 
@@ -71,24 +71,24 @@ int main(int argc, char *argv[])
 
         if (argv[1][1] == 'p' && argv[1][2] == 'e')
         {
-            cout << endl << "Eingabe der Paare! \nEigabe mit 'END' beenden!" << endl;
+            cout << endl << "Eingabe der teame! \nEigabe mit 'END' beenden!" << endl;
             cout << "Bitte Keine Leerzeichen!" << endl;
-			Dat_Paare.open("Paare.txt", ios::out | ios::trunc);
+			Dat_teame.open("teame.txt", ios::out | ios::trunc);
 
 
             i++;
             cout << "Nr. " << i << ": "; cin >> Eingabe;
-            if ( Eingabe != "END") Dat_Paare << i << " " << Eingabe << " ";
+            if ( Eingabe != "END") Dat_teame << i << " " << Eingabe << " ";
 
 			while ( Eingabe != "END")
 			{
 				i++;
 				cout << "Nr. " << i << ": "; cin >> Eingabe;
-				if ( Eingabe != "END") Dat_Paare << endl << i << " " << Eingabe << " ";
+				if ( Eingabe != "END") Dat_teame << endl << i << " " << Eingabe << " ";
 			}
 
 
-			Dat_Paare.close();
+			Dat_teame.close();
 			return 0;
         }
     }
@@ -96,7 +96,7 @@ int main(int argc, char *argv[])
     cout << "##############################\n# Bridge Analyse V 0.4 beta  #\n# (c) by Simon Michalke 3.12 #\n# C-Unterprogramm V. 0.2.1   #\n##############################\n";
     int einasdf;
     //cout << endl << "Was wollen sie tun?" << endl;
-    //cout << "1: Paare eingeben" << endl;
+    //cout << "1: teame eingeben" << endl;
     //cout << "2: Ergebnisse eingeben" << endl;
     //cout << ">";
     //cin >> einasdf;
@@ -109,24 +109,24 @@ int main(int argc, char *argv[])
 
 		//try
 		//{
-			cout << endl << "Eingabe der Paare! \nEigabe mit 'END' beenden!" << endl;
+			cout << endl << "Eingabe der teame! \nEigabe mit 'END' beenden!" << endl;
 
-			Dat_Paare.open("Paare.txt", ios::out | ios::trunc);
+			Dat_teame.open("teame.txt", ios::out | ios::trunc);
 
 
             i++;
             cout << "Nr. " << i << ": "; cin >> Eingabe;
-            if ( Eingabe != "END") Dat_Paare << i << " " << Eingabe << " ";
+            if ( Eingabe != "END") Dat_teame << i << " " << Eingabe << " ";
 
 			while ( Eingabe != "END")
 			{
 				i++;
 				cout << "Nr. " << i << ": "; cin >> Eingabe;
-				if ( Eingabe != "END") Dat_Paare << endl << i << " " << Eingabe << " ";
+				if ( Eingabe != "END") Dat_teame << endl << i << " " << Eingabe << " ";
 			}
 
 
-			Dat_Paare.close();
+			Dat_teame.close();
 		//}
 
 		//catch (1)
@@ -144,7 +144,7 @@ int main(int argc, char *argv[])
 
 			Eingabe = "asdf";
 
-			cout << "Wieviele Paare? ";
+			cout << "Wieviele teame? ";
 			cin >> AnzP;
             Dat_Erg << AnzP << endl;
 
@@ -178,18 +178,18 @@ int main(int argc, char *argv[])
 				for (int i=1; ( i <= Runden ) && ( Nr != 0 ) ; i++)
 				{
 				    cout << endl << "        Runde " << i << " !" << endl;
-				    cout << "PaarNummer N/S : ";
+				    cout << "teamNummer N/S : ";
                     cin >> PNS;
                     cout << "Ergebnis N/S   : ";
                     cin >> ErgNS;
-                    cout << "Paarnummer O/W : ";
+                    cout << "teamnummer O/W : ";
                     cin >> POW;
                     cout << "Ergebnis O/W   : ";
                     cin >> ErgOW;
                     cout << endl << "Nr.: " << Nr << " PNS: " << PNS << " ErgNS: " << ErgNS << " POW: " << POW << " ErgOW: " << ErgOW << endl << endl ;
                     if ( ( ErgNS > 0 ) && ( ErgOW > 0) )
                     {
-                        cout << "Falsche Eingabe! Nur ein Paar bekommt Punkte! Nochmal bitte!" << endl;
+                        cout << "Falsche Eingabe! Nur ein team bekommt Punkte! Nochmal bitte!" << endl;
                         i--;
                     }
                     else if ( ( ErgNS <= 0 ) && ( ErgOW <= 0) )
@@ -199,7 +199,7 @@ int main(int argc, char *argv[])
                     }
                     else if ( (PNS>AnzP) && (POW>AnzP) )
                     {
-                        cout << "soviel Paare gibt es nicht! Bitte Widerholen!" << endl;
+                        cout << "soviel teame gibt es nicht! Bitte Widerholen!" << endl;
                         i--;
                     }
                     else

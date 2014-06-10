@@ -1,5 +1,5 @@
 #include "../headers.h"
-#include "Game.h"
+#include "game.h"
 
 Game::Game(int pPNS, int pPOW, int pErgNS, int pErgOW)
 {

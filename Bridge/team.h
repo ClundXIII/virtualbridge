@@ -1,9 +1,9 @@
-#ifndef PAARE_H_INCLUDED
-#define PAARE_H_INCLUDED
+#ifndef teamE_H_INCLUDED
+#define teamE_H_INCLUDED
 
 #include "../headers.h"
 
-class Paar
+class team
 {
     public:
 
@@ -11,8 +11,8 @@ class Paar
     float Prozent;
     int tempScore;
 
-    Paar(std::string Namets, int Nummerts);
-    ~Paar();
+    team(std::string Namets, int Nummerts);
+    ~team();
 
     void AddMP(float MPtoAdd);
 
@@ -32,4 +32,4 @@ class Paar
 };
 
 
-#endif /* PAARE_h_INCLUDED */
+#endif /* teamE_h_INCLUDED */

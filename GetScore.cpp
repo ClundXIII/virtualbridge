@@ -1,7 +1,7 @@
 #include <iostream>
 #include <string.h>
 #include <fstream>
-#include "allBridge.h"
+#include "includeall.h"
 
 using namespace std;
 
@@ -10,20 +10,20 @@ int main(int argc, char* argv[])
     cout << "##############################\n# Bridge Analyse V 0.4 beta  #\n# (c) by Simon Michalke 3.12 #\n# C-Unterprogramm V. 0.2.1   #\n##############################\n";
 
     char cstring[30];
-    fstream Dat_Boards, Dat_Paare;
+    fstream Dat_Boards, Dat_teams;
     int Anz_B, Anz_G, Anz_P;
 
     Bridge *DAS_SPIEL;
 
     cout << "Oeffne Dateien ..." << endl;
 
-    Dat_Boards.open("Boards.txt", ios::in);
+    Dat_Boards.open("boards.txt", ios::in);
     if (!Dat_Boards.good()) cout << "Fehler beim Oeffnen von Boards.txt!" << endl;
-    else cout << "Boards.txt erfolgreich geoeffnet!" << endl;
+    else cout << "boards.txt erfolgreich geoeffnet!" << endl;
 
-    Dat_Paare.open("Paare.txt", ios::in);
-    if (!Dat_Paare.good()) cout << "Fehler beim Oeffnen von Paare.txt!" << endl;
-    else cout << "Paare.txt erfolgreich geoeffnet!" << endl;
+    Dat_teams.open("teams.txt", ios::in);
+    if (!Dat_teams.good()) cout << "Fehler beim Oeffnen von teame.txt!" << endl;
+    else cout << "teams.txt erfolgreich geoeffnet!" << endl;
 
     cout << "lese Spiel ein ..." << endl;
 
@@ -42,7 +42,7 @@ int main(int argc, char* argv[])
 
     cout << "fange mit Einlesen an ..." << endl;
 
-    cout << "Lese Paare ein:" << endl;
+    cout << "Lese teams ein:" << endl;
 
     char *z;
     int i;
@@ -51,9 +51,9 @@ int main(int argc, char* argv[])
     for (int j=1; j<=Anz_P; j++)
         DAS_SPIEL->insPlayer(j, "Unbenannt");
 
-    while (!Dat_Paare.eof())
+    while (!Dat_teams.eof())
     {
-        Dat_Paare.getline(cstring, sizeof(cstring));
+        Dat_teams.getline(cstring, sizeof(cstring));
         z = cstring;
         cout << cstring << endl << "-> ";
         i = getintfc(&z);
@@ -61,12 +61,12 @@ int main(int argc, char* argv[])
         tempString.clear();
         tempString.append(z);
 
-        cout << "Paar \"" << tempString << "\", Nr.: " << i << endl;
+        cout << "team \"" << tempString << "\", Nr.: " << i << endl;
 
         DAS_SPIEL->insPlayer(i, tempString);
     }
 
-    Dat_Paare.close();
+    Dat_teams.close();
 
     int BNr, SNr, pPNS, pPOW, pErgNS, pErgOW;
 
@@ -92,7 +92,7 @@ int main(int argc, char* argv[])
         }
         else
         {
-            cout << "Ergebnis ausgelassen! Paarnummer out of Range!" << endl;
+            cout << "Ergebnis ausgelassen! teamnummer out of Range!" << endl;
         }
     }
 

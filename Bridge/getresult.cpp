@@ -1,6 +1,6 @@
 #include "../headers.h"
-#include "Bridge.h"
-#include "Paar.h"
+#include "bridge.h"
+#include "team.h"
 #include <iomanip>
 #include <string>
 #include <fstream>
@@ -48,15 +48,15 @@ void Bridge::Auswertung()
     int tempPNS, tempPOW;
     int tempErgNS, tempErgOW;
     float tempActMP;
-    Paar **tempPaarArrayNS;
-    Paar **tempPaarArrayOW;
+    team **tempteamArrayNS;
+    team **tempteamArrayOW;
     bool fertig=false;
-    Paar *tempPaar;
+    team *tempteam;
     DynDurchSchnitt Durch;
     //int tempMPtoadd;
 
-    tempPaarArrayNS = new Paar*[AnzG];
-    tempPaarArrayOW = new Paar*[AnzG];
+    tempteamArrayNS = new team*[AnzG];
+    tempteamArrayOW = new team*[AnzG];
     int tempScore[AnzG];
     int tempArrayIndex=0;
 
@@ -71,16 +71,16 @@ void Bridge::Auswertung()
         {
             cout << "    analysiere Spiel " << GNr << " ..." << endl;
             Boards[aktBNr-1]->Spiel[GNr-1].getGame(&tempPNS, &tempPOW, &tempErgNS, &tempErgOW);
-            cout << "    Paar " << tempPNS << " bekommt " << (tempErgNS - tempErgOW) << endl;
-            cout << "    Paar " << tempPOW << " bekommt " << (tempErgOW - tempErgNS) << endl;
-            Paare->Paare[tempPNS-1]->tempScore = (tempErgNS - tempErgOW);
-            Paare->Paare[tempPOW-1]->tempScore = (tempErgOW - tempErgNS);
-            tempPaarArrayNS[tempArrayIndex] = Paare->Paare[tempPNS-1];
-            tempPaarArrayOW[tempArrayIndex] = Paare->Paare[tempPOW-1];
+            cout << "    team " << tempPNS << " bekommt " << (tempErgNS - tempErgOW) << endl;
+            cout << "    team " << tempPOW << " bekommt " << (tempErgOW - tempErgNS) << endl;
+            bTeams->teams[tempPNS-1]->tempScore = (tempErgNS - tempErgOW);
+            bTeams->teams[tempPOW-1]->tempScore = (tempErgOW - tempErgNS);
+            tempteamArrayNS[tempArrayIndex] = bTeams->teams[tempPNS-1];
+            tempteamArrayOW[tempArrayIndex] = bTeams->teams[tempPOW-1];
             tempArrayIndex++;
         }
 
-        //Sortiere die Paare
+        //Sortiere die teame
 
 
         fertig = false;
@@ -89,24 +89,24 @@ void Bridge::Auswertung()
             fertig = true;
             for (int i=0; i < (AnzG-1); i++)
             {
-                if (tempPaarArrayNS[i]->tempScore < tempPaarArrayNS[i+1]->tempScore)
+                if (tempteamArrayNS[i]->tempScore < tempteamArrayNS[i+1]->tempScore)
                 {
-                    cout << "Paar " << tempPaarArrayNS[i]->GetName() << ", Nummer " << tempPaarArrayNS[i]->GetNummer() << " hat weniger Score wie " << tempPaarArrayNS[i+1]->GetName() << ", Nummer " << tempPaarArrayNS[i+1]->GetNummer() << endl;
-                    tempPaar             = tempPaarArrayNS[i];
-                    tempPaarArrayNS[i]   = tempPaarArrayNS[i+1];
-                    tempPaarArrayNS[i+1] = tempPaar;
+                    cout << "team " << tempteamArrayNS[i]->GetName() << ", Nummer " << tempteamArrayNS[i]->GetNummer() << " hat weniger Score wie " << tempteamArrayNS[i+1]->GetName() << ", Nummer " << tempteamArrayNS[i+1]->GetNummer() << endl;
+                    tempteam             = tempteamArrayNS[i];
+                    tempteamArrayNS[i]   = tempteamArrayNS[i+1];
+                    tempteamArrayNS[i+1] = tempteam;
 
-                    tempPaar             = tempPaarArrayOW[i];
-                    tempPaarArrayOW[i]   = tempPaarArrayOW[i+1];
-                    tempPaarArrayOW[i+1] = tempPaar;
+                    tempteam             = tempteamArrayOW[i];
+                    tempteamArrayOW[i]   = tempteamArrayOW[i+1];
+                    tempteamArrayOW[i+1] = tempteam;
                     fertig = false;
                 }
             }
         }
 
-        for (int i=0; i<AnzG; i++) cout << tempPaarArrayNS[i]->GetNummer() << ": " << tempPaarArrayNS[i]->GetName() << ": " << tempPaarArrayNS[i]->tempScore << endl;
+        for (int i=0; i<AnzG; i++) cout << tempteamArrayNS[i]->GetNummer() << ": " << tempteamArrayNS[i]->GetName() << ": " << tempteamArrayNS[i]->tempScore << endl;
         cout << "OW:" << endl;
-        for (int i=0; i<AnzG; i++) cout << tempPaarArrayOW[i]->GetNummer() << ": " << tempPaarArrayOW[i]->GetName() << ": " << tempPaarArrayOW[i]->tempScore << endl;
+        for (int i=0; i<AnzG; i++) cout << tempteamArrayOW[i]->GetNummer() << ": " << tempteamArrayOW[i]->GetName() << ": " << tempteamArrayOW[i]->tempScore << endl;
         //temporaerer Score ermittelt, ermittle PM:
 
         cout << "   scanne fuer MP ..." << endl;
@@ -117,15 +117,15 @@ void Bridge::Auswertung()
 
         for (int i=0; i<(AnzG-1); i++)
         {
-            cout << "MP: " << tempActMP << ", Paar: " << tempPaarArrayNS[i]->GetName() << endl;
+            cout << "MP: " << tempActMP << ", team: " << tempteamArrayNS[i]->GetName() << endl;
             Durch.add(tempActMP);
 
-            if (tempPaarArrayNS[i]->tempScore != tempPaarArrayNS[i+1]->tempScore)
+            if (tempteamArrayNS[i]->tempScore != tempteamArrayNS[i+1]->tempScore)
             {
                 for (int j=i; j > (i-Durch.GetGrad()); j--)
                 {
-                    tempPaarArrayNS[j]->AddMP(Durch.GetDurchschnitt());
-                    tempPaarArrayOW[j]->AddMP(MAXMP-Durch.GetDurchschnitt());
+                    tempteamArrayNS[j]->AddMP(Durch.GetDurchschnitt());
+                    tempteamArrayOW[j]->AddMP(MAXMP-Durch.GetDurchschnitt());
                 }
                 Durch.reset();
             }
@@ -133,13 +133,13 @@ void Bridge::Auswertung()
             tempActMP -= 2;
         }
 
-        cout << "MP: " << tempActMP << ", Paar: " << tempPaarArrayNS[AnzG-1]->GetName() << endl;
+        cout << "MP: " << tempActMP << ", team: " << tempteamArrayNS[AnzG-1]->GetName() << endl;
         Durch.add(tempActMP);
 
         for (int j=(AnzG-1); j > ((AnzG-1)-Durch.GetGrad()); j--)
             {
-                tempPaarArrayNS[j]->AddMP(Durch.GetDurchschnitt());
-                tempPaarArrayOW[j]->AddMP(MAXMP-Durch.GetDurchschnitt());
+                tempteamArrayNS[j]->AddMP(Durch.GetDurchschnitt());
+                tempteamArrayOW[j]->AddMP(MAXMP-Durch.GetDurchschnitt());
             }
 
 
@@ -149,19 +149,19 @@ void Bridge::Auswertung()
     cout << "Werte nicht gespielte Boards aus ..." << endl;
 
     for (int i=0; i<AnzP; i++){//Berechne Prozente
-        Paare->Paare[i]->Prozent = 100* (Paare->Paare[i]->GetMP() / (MAXMP*Paare->Paare[i]->GespielteBoards));}
+        bTeams->teams[i]->Prozent = 100* (bTeams->teams[i]->GetMP() / (MAXMP*bTeams->teams[i]->GespielteBoards));}
 
-    for (int i=0; i<AnzP; i++) cout << Paare->Paare[i]->GespielteBoards << " ";
+    for (int i=0; i<AnzP; i++) cout << bTeams->teams[i]->GespielteBoards << " ";
     cout << endl;
 
     for (int i=0; i<AnzP; i++){
-        cout << "Paar " << Paare->Paare[i]->GetName() \
-        << " bekommt fuer " << (AnzB - (Paare->Paare[i]->GespielteBoards)) \
+        cout << "team " << bTeams->teams[i]->GetName() \
+        << " bekommt fuer " << (AnzB - (bTeams->teams[i]->GespielteBoards)) \
         << " ungespielte Boards den Durchschnitt " \
-        << (AnzB - (Paare->Paare[i]->GespielteBoards)) * (Paare->Paare[i]->Prozent*MAXMP/100) \
+        << (AnzB - (bTeams->teams[i]->GespielteBoards)) * (bTeams->teams[i]->Prozent*MAXMP/100) \
         << " dazu!" << endl;
 
-        Paare->Paare[i]->AddMP( (AnzB - (Paare->Paare[i]->GespielteBoards)) * (Paare->Paare[i]->Prozent*MAXMP/100) );
+        bTeams->teams[i]->AddMP( (AnzB - (bTeams->teams[i]->GespielteBoards)) * (bTeams->teams[i]->Prozent*MAXMP/100) );
     }
 
     cout << endl << "Beginne mit Bubblesort ..." << endl << endl;
@@ -173,21 +173,21 @@ void Bridge::Auswertung()
         fertig = true;
         for (int i=0; i<(AnzP-1); i++)
         {
-            if (Paare->Paare[i]->GetMP() < Paare->Paare[i+1]->GetMP())
+            if (bTeams->teams[i]->GetMP() < bTeams->teams[i+1]->GetMP())
             {
-                tempPaar          = Paare->Paare[i];
-                Paare->Paare[i]   = Paare->Paare[i+1];
-                Paare->Paare[i+1] = tempPaar;
+                tempteam           = bTeams->teams[i];
+                bTeams->teams[i]   = bTeams->teams[i+1];
+                bTeams->teams[i+1] = tempteam;
                 fertig = false;
             }
         }
     }
 
-    for (int i=0; i<AnzP; i++){ //Anzeigen der Paare
+    for (int i=0; i<AnzP; i++){ //Anzeigen der teame
         //Prozent berechnen
-        //Paare->Paare[i]->Prozent = 100* (Paare->Paare[i]->GetMP() / (MAXMP*AnzB));
+        //teame->teame[i]->Prozent = 100* (teame->teame[i]->GetMP() / (MAXMP*AnzB));
 
-        cout << Paare->Paare[i]->GetNummer() << ": " << Paare->Paare[i]->GetName() << ": " << Paare->Paare[i]->GetMP() << " Prozent: " << Paare->Paare[i]->Prozent << endl;
+        cout << bTeams->teams[i]->GetNummer() << ": " << bTeams->teams[i]->GetName() << ": " << bTeams->teams[i]->GetMP() << " Prozent: " << bTeams->teams[i]->Prozent << endl;
     }
 
     cout << endl << endl << "Schoenere Ausgabe:" << endl;
@@ -196,7 +196,7 @@ void Bridge::Auswertung()
     cout << "----------------------------------------------" << endl;
 
     for (int i=0; i<AnzP; i++){
-        cout << setw(5) << i+1 << "|" << setw(3) << Paare->Paare[i]->GetNummer() << "|" << setw(20) << Paare->Paare[i]->GetName() << "|" << setw(7) << Paare->Paare[i]->GetMP() << "|" << Paare->Paare[i]->Prozent << endl;
+        cout << setw(5) << i+1 << "|" << setw(3) << bTeams->teams[i]->GetNummer() << "|" << setw(20) << bTeams->teams[i]->GetName() << "|" << setw(7) << bTeams->teams[i]->GetMP() << "|" << bTeams->teams[i]->Prozent << endl;
     }
     
     cout << endl << endl << "erzeuge HTML-Ausgabe ..." << endl;
@@ -208,11 +208,12 @@ void Bridge::Auswertung()
     //Der Header
     html << "<!DOCTYPE HTML PUBLIC \"-//W3C//DTD HTML 4.01//EN\"><html><head><title>Bridge-Ergenbis</title></head><body>" << endl;    
     //die Tabelle (Anfang)
-    html << "<table border=\"1\"><tr><th>Platzierung</th><th>Paarnummer</th><th>Name</th><th>MP</th><th>Prozent</th></tr>" << endl;
+    html << "<table border=\"1\"><tr><th>Place</th><th>Teamnumber</th><th>Names</th><th>MP</th><th>Win-Percent</th></tr>" << endl;
         
     for (int i=0; i<AnzP; i++){
         html << "<tr>";
-        html << "<th>"<<i+1<<"</th><th>"<<Paare->Paare[i]->GetNummer()<<"</th><th>"<<Paare->Paare[i]->GetName()<<"</th><th>"<<Paare->Paare[i]->GetMP()<<"</th><th>"<<Paare->Paare[i]->Prozent<<"</th>"<<endl;
+		//std::cout.precision(2);
+        html << "<th>"<<i+1<<"</th><th>"<<bTeams->teams[i]->GetNummer()<<"</th><th>"<<bTeams->teams[i]->GetName()<<"</th><th>"<<bTeams->teams[i]->GetMP()<<"</th><th>"<<bTeams->teams[i]->Prozent<<"</th>"<<endl;
         html << "</tr>";
     }
     
